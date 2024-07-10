@@ -1,3 +1,5 @@
+import HeroSection from "@/components/home/hero";
+import ProjectsSection from "@/components/home/projects";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import DefaultLayout from "@/layouts/defaultLayout";
@@ -10,8 +12,11 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <DefaultLayout>
+    <DefaultLayout className="items-center justify-center">
       {/* Hero */}
+      <HeroSection />
+      <ProjectsSection />
+
       <div className="bg-secondary h-[20rem] flex items-center justify-center text-center p-[4%]">
         <h1 className="text-4xl font-bold">Example</h1>
       </div>

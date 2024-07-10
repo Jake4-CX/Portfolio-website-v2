@@ -19,7 +19,7 @@ const NavbarComponent: React.FC = () => {
         <div className="flex w-full px-[6%] md:px-[4%] lg:max-w-[1280px] items-center gap-4">
           <Link className="flex items-center gap-2 font-semibold hover:bg-secondary px-4 py-2 rounded-lg duration-300" to="/">
             <Box className="h-6 w-6" />
-            <span className="hidden lg:block">Example</span>
+            <span className="hidden lg:block">Portfolio</span>
           </Link>
           <div className="w-full flex-1">
             {/* <form>
@@ -33,6 +33,7 @@ const NavbarComponent: React.FC = () => {
             </div>
           </form> */}
           </div>
+          <DashboardButtonComponent />
           <ThemeToggleComponent />
           <LoginProfileComponent />
         </div>
@@ -40,6 +41,30 @@ const NavbarComponent: React.FC = () => {
     </>
   )
 
+}
+
+const DashboardButtonComponent: React.FC = () => {
+
+  const userRedux = useAppSelector((state) => state.userReduser.value);
+
+  return (
+    <>
+      {
+        userRedux.userData && userRedux.userData.userRole == "ADMIN" ? (
+          <Link to="/dashboard">
+            <Button
+              size={"default"}
+              variant={"outline"}
+            >
+              Dashboard
+            </Button>
+          </Link>
+        ) : (
+          <></>
+        )
+      }
+    </>
+  )
 }
 
 const LoginProfileComponent: React.FC = () => {
@@ -101,10 +126,10 @@ const LoginProfileComponent: React.FC = () => {
   )
 
   function logoutUser() {
-    
+
     removeLocalStoredUser();
     removeLocalStoredTokens();
-  
+
     dispatch(setUser(undefined));
     dispatch(setTokens(undefined));
 

@@ -45,7 +45,7 @@ api.interceptors.response.use(
 
       try {
         // Request a new token using the refresh token
-        const { data }: { data: TokenDataType } = await axios.post(`${baseUrl}/auth/refresh`, { refreshToken: userTokens.refreshToken }, { headers: {} });
+        const { data }: { data: TokenDataType } = (await axios.post(`${baseUrl}/auth/refresh`, { refreshToken: userTokens.refreshToken }, { headers: {} })).data;
 
         setLocalStoredTokens(data);
         originalRequest.headers['Authorization'] = 'Bearer ' + data.accessToken;

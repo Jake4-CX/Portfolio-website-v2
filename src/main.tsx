@@ -24,7 +24,7 @@ const router = createBrowserRouter(
       <Route path="register" element={<RegisterPage />} />
 
       {/* Dashboard - Requires role */}
-      <Route element={<RequireAuth allowedRoles={['USER', 'ADMIN']} />}>
+      <Route element={<RequireAuth allowedRoles={['ADMIN']} />}>
         <Route path="dashboard" element={<DashboardPage />} />
       </Route>
     </Route>

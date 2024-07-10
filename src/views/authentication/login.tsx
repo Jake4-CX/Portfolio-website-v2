@@ -61,7 +61,7 @@ const LoginPage: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(userObject.data.user));
       localStorage.setItem("tokens", JSON.stringify(userObject.data.token));
 
-      navigate("/dashboard");
+      navigate("/");
     },
     onError: () => {
       toast.error("Failed to login");
