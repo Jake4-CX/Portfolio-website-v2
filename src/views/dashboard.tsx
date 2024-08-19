@@ -12,6 +12,7 @@ import { getTechnologies } from "@/api/technologies";
 import DefaultLayout from "@/layouts/defaultLayout";
 import { useAppSelector } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
+import AddTechnologyComponent from "@/components/dashboard/technologies/addTechnology";
 
 const DashboardPage: React.FC = () => {
 
@@ -33,7 +34,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Card className="w-full h-[32rem] mt-[4%]">
+      <Card className="w-full min-h-[32rem] mt-[4%]">
         <CardHeader>
           <CardTitle>Portfolio Dashboard</CardTitle>
           <CardDescription>
@@ -45,7 +46,12 @@ const DashboardPage: React.FC = () => {
           {/* Projects */}
 
           {/* Technologies */}
+          <div className="flex flex-col mt-4 mb-2">
+            <h3 className="text-2xl font-semibold leading-none tracking-tight">Technologies</h3>
+              <p className="text-sm text-muted-foreground">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus semper tortor dolor, id imperdiet erat fermentum ac. Aenean quis ex turpis. Sed posuere sodales tempus.</p>
+          </div>
           <AllTechnologiesComponent technologies={getTechnologiesQuery.data} />
+          <AddTechnologyComponent />
           
         </CardContent>
       </Card>

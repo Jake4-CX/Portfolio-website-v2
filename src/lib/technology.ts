@@ -28,3 +28,17 @@ export function sortTechnology(technologies: Technology[]) {
     }
   });
 }
+
+export async function urlToFile(url: string, filename: string): Promise<File> {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const mimeType = blob.type;
+
+  // Handle special cases for extensions
+  let extension = mimeType.split("/")[1];
+  if (extension === "svg+xml") {
+    extension = "svg";
+  }
+
+  return new File([blob], `${filename}.${extension}`, { type: mimeType });
+}

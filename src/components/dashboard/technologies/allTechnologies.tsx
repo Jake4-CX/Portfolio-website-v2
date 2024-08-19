@@ -3,6 +3,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ColumnDef, SortingState, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
 import { RefreshCw } from "lucide-react";
 import { useState } from "react";
+import EditTechnologyModal from "./editTechnology";
+import { Badge } from "@/components/ui/badge";
+import DeleteTechnologyModal from "./deleteTechnology";
 
 interface TechnologiesTableComponentProps {
   technologies: Technology[] | undefined
@@ -30,15 +33,15 @@ export const columns: ColumnDef<Technology>[] = [
     accessorKey: 'technologyType',
     header: 'Technology Type',
     cell: ({ row }) => (
-      <span className="capitalize">{row.original.technologyType}</span>
+      <Badge variant={"default"} className="capitalize">{row.original.technologyType.toLowerCase()}</Badge>
     )
   },
   {
     header: 'Actions',
-    cell: () => (
+    cell: ({ row }) => (
       <div className="flex items-center space-x-2">
-        <Button variant="outline" size="sm">Edit</Button>
-        <Button variant="outline" size="sm">Delete</Button>
+        <EditTechnologyModal technology={row.original} />
+        <DeleteTechnologyModal technology={row.original} />
       </div>
     )
   }
@@ -49,9 +52,14 @@ const AllTechnologiesComponent: React.FC<TechnologiesTableComponentProps> = ({ t
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: 'id',
-      desc: true
+      desc: false
     }
   ])
+
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 5,
+  })
 
   const table = useReactTable({
     data: technologies || [],
@@ -60,8 +68,10 @@ const AllTechnologiesComponent: React.FC<TechnologiesTableComponentProps> = ({ t
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onPaginationChange: setPagination,
     state: {
       sorting,
+      pagination
     }
   })
 
