@@ -1,4 +1,4 @@
-export async function uploadTechnologyImage(image: File, presignedURL: string): Promise<string> {
+export async function uploadImage(image: File, presignedURL: string): Promise<string> {
   try {
     // Prepare the form data to be sent to S3
     const formData = new FormData();

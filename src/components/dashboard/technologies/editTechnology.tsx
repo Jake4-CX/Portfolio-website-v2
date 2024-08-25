@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { urlToFile } from "@/lib/technology";
-import { uploadTechnologyImage } from "@/lib/uploadS3";
+import { uploadImage } from "@/lib/uploadS3";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RefreshCw } from "lucide-react";
@@ -116,7 +116,7 @@ const EditTechnologyModal: React.FC<EditTechnologyModalProps> = ({ technology })
     try {
       const uploadUrl = presigned_url.data.url;
       // upload the image to the S3 bucket
-      const uploadedImageURL = await uploadTechnologyImage(values.technologyImage[0], uploadUrl);
+      const uploadedImageURL = await uploadImage(values.technologyImage[0], uploadUrl);
 
       // update technology's database record
       mutate({

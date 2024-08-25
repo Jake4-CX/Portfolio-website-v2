@@ -12,12 +12,15 @@ type TokenDataType = {
 }
 
 type Project = {
-  id: number,
+  id: number | undefined,
   projectName: string,
   projectDescription: string,
   isFeatured: boolean,
-  startDate: Date,
-  endDate: Date | null
+  startDate: Date | number,
+  endDate: Date | number | null,
+  projectImages: ProjectImage[] | [] | null | undefined,
+  projectTechnologies: ProjectTechnology[] | number[] | null | undefined,
+  projectURLs: ProjectLinks | null | undefined
 }
 
 type Technology = {
@@ -30,15 +33,21 @@ type Technology = {
 type ProjectImage = {
   id: number,
   projectId: number,
-  image: string,
+  imageURL: string,
   createdAt: Date,
   updatedAt: Date
 }
 
-type ProjectLinks = {
+type ProjectTechnology = {
   id: number,
   projectId: number,
-  githubURL: string | null,
-  websiteURL: string | null,
-  youtubeURL: string | null
+  technologyId: number
+}
+
+type ProjectLinks = {
+  id: number | undefined,
+  projectId: number | undefined,
+  githubURL: string | null | undefined,
+  websiteURL: string | null | undefined,
+  youtubeURL: string | null | undefined
 }
