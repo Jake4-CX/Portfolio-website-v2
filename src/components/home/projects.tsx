@@ -1,7 +1,22 @@
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import ProjectCard from "./projectCard";
+import { getProjects } from "@/api/projects";
 
 const ProjectsSection: React.FC = () => {
+
+  const getProjectsQuery = useQuery({
+    queryKey: ["projects"],
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+
+      const projectsResponse = await getProjects();
+
+      const data = (projectsResponse.data).projects as Project[];
+
+      return data;
+    }
+  })
 
   return (
     <>
@@ -13,9 +28,20 @@ const ProjectsSection: React.FC = () => {
         </CardHeader>
         <CardContent className="w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-[6%] lg:px-0 w-full">
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
+            {
+              getProjectsQuery.isPending ? (
+                <>
+                  <ProjectCard />
+                  <ProjectCard />
+                  <ProjectCard />
+                  <ProjectCard />
+                </>
+              ) : (
+                getProjectsQuery.data?.map((project: Project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))
+              )
+            }
             <ProjectCard />
           </div>
         </CardContent>

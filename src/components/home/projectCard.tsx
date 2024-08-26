@@ -1,20 +1,51 @@
 import { sortTechnology } from "@/lib/technology";
 import { Card } from "../ui/card";
 import moment from "moment";
+import { useQuery } from "@tanstack/react-query";
+import { getTechnologies } from "@/api/technologies";
+import { Button } from "@/components/ui/button";
+import ProjectCardModal from "./projectCardModal";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 
 
 type ProjectCardProps = {
-  project?: Project & {
-    projectTechnologies: {
-      id: number,
-      technology: Technology
-    }[],
-    projectImages: ProjectImage[],
-    projectLinks: ProjectLinks
-  }
+  project?: Project
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+
+  const getTechnologiesQuery = useQuery({
+    queryKey: ["technologies"],
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+
+      const technologiesResponse = await getTechnologies();
+
+      const data = (technologiesResponse.data).technologies as Technology[];
+
+      return data;
+    }
+  })
+
+  // convert ProjectTechnology[] to Technology[]
+  function convertProjectTechnologyToTechnology(projectTechnologies: ProjectTechnology[]): Technology[] {
+    const technologies: Technology[] = [];
+
+    projectTechnologies.forEach((projectTech) => {
+      const technology = getTechnologiesQuery.data?.find((tech: Technology) => tech.id === projectTech.technologyId);
+      if (technology) {
+        technologies.push(technology);
+      }
+    });
+
+    return technologies;
+  }
 
   return (
     <>
@@ -30,23 +61,37 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   <p className="text-xs text-gray-500 italic">({moment(project.startDate).format("Do MMM YY")} - {project.endDate ? moment(project.endDate).format("Do MMM YY") : "today"})</p>
                 </div>
               </div>
-              <p className="text-sm line-clap-3 max-h-[80px]">{project.projectDescription}</p>
+              <p className="text-sm line-clamp-3 max-h-[80px]">{project.projectDescription}</p>
 
               {/* Technologies used */}
               <div className="mt-2">
                 <h3 className="font-bold text-sm mt-2">Technologies Used</h3>
-                <div className="w-full h-[2rem] px-2 py-1 bg-primary rounded-lg relative flex flex-row items-center space-x-3 mt-2">
+                <div className="w-full h-[2rem] px-2 py-1 border border-input bg-background rounded-lg relative flex flex-row items-center space-x-3 mt-2">
                   {
-                    project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(project.projectTechnologies.map((tech) => tech.technology)).map((tech, index) => {
+                    project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])).map((tech, index) => {
                       return (
                         <div key={index}>
-                          <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         </div>
                       )
                     })
                   }
                 </div>
               </div>
+
+              <div className="absolute flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0 p-4">
+                <ProjectCardModal project={project} technologies={convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])} />
+              </div>
+
             </>
           ) : (
             <>
