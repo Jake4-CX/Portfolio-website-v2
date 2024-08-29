@@ -30,7 +30,7 @@ const GithubCommits: React.FC = () => {
 
   return (
     <>
-      <Card className="flex flex-col items-center justify-center h-fit w-full max-w-[60.625rem] p-3">
+      <Card id="ghcontributions" className="flex flex-col items-center justify-center h-fit w-full max-w-[60.625rem] p-3">
         <CardHeader className="w-full px-8 lg:px-4">
           <CardTitle>Github Commits</CardTitle>
           <CardDescription>Here is a breakdown of my github contribution history</CardDescription>

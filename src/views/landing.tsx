@@ -10,7 +10,7 @@ const LandingPage: React.FC = () => {
   // const navigate = useNavigate();
 
   return (
-    <DefaultLayout className="items-center justify-center">
+    <DefaultLayout>
       {/* Hero */}
       <HeroSection />
       <ProjectsSection />
