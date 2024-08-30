@@ -6,6 +6,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { RefreshCw } from "lucide-react";
+import LoadingComponent from "../global/loading";
 
 
 const TechSkillsComponent: React.FC = () => {
@@ -33,9 +35,7 @@ const TechSkillsComponent: React.FC = () => {
         </CardHeader>
         <CardContent className="w-full">
           {
-            getTechnologiesQuery.isPending && !getTechnologiesQuery.data ? (
-              <></>
-            ) : (
+            !getTechnologiesQuery.isPending && getTechnologiesQuery.data ? (
               <>
                 <div className="w-full inline-flex flex-nowrap overflow-x-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)]">
                   {
@@ -62,6 +62,8 @@ const TechSkillsComponent: React.FC = () => {
                   }
                 </div>
               </>
+            ) : (
+              <LoadingComponent />
             )
           }
         </CardContent>

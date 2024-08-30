@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getGithubCommits } from "@/api/github";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { RefreshCw } from "lucide-react";
+import LoadingComponent from "../global/loading";
 
 const GithubCommits: React.FC = () => {
 
@@ -45,9 +47,7 @@ const GithubCommits: React.FC = () => {
 
                 </>
               ) : (
-                <>
-                  <p>Loading</p>
-                </>
+                <LoadingComponent />
               )
             }
             <ScrollBar orientation="horizontal" />
