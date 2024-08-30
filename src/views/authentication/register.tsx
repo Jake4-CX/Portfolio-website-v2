@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -79,7 +80,8 @@ const RegisterPage: React.FC = () => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    mutate(values);
+    // mutate(values);
+    toast.error("The registration feature is currently disabled. Please try again later.");
   }
 
   return (

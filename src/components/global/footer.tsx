@@ -1,4 +1,4 @@
-import LogoComponent from "./logo";
+import LogoComponent from "@/components/global/logo";
 
 const FooterComponent: React.FC = () => {
 
@@ -19,9 +19,9 @@ const FooterComponent: React.FC = () => {
                 <h1 className="text-xl font-bold leading-3">Navigation</h1>
                 <span className="bg-accent w-[5rem] h-1 rounded-lg"></span>
                 <div id="footer-links" className="flex flex-col w-full h-full space-y-2">
-                  <a href="#projects" className="hover:text-primary/50 duration-300">Projects</a>
-                  <a href="#ghcontributions" className="hover:text-primary/50 duration-300">Github Commits</a>
-                  <a href="#contact" className="hover:text-primary/50 duration-300">Contact</a>
+                  <a href="/#projects" className="hover:text-primary/50 duration-300">Projects</a>
+                  <a href="/#ghcontributions" className="hover:text-primary/50 duration-300">Github Commits</a>
+                  <a href="/#contact" className="hover:text-primary/50 duration-300">Contact</a>
                 </div>
               </div>
 
