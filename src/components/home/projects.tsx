@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import ProjectCard from "./projectCard";
 import { getProjects } from "@/api/projects";
+import FeaturedProjectCard from "./featuredProjectCard";
 
 const ProjectsSection: React.FC = () => {
 
@@ -31,18 +32,20 @@ const ProjectsSection: React.FC = () => {
             {
               getProjectsQuery.isPending ? (
                 <>
-                  <ProjectCard />
-                  <ProjectCard />
+                  <FeaturedProjectCard />
                   <ProjectCard />
                   <ProjectCard />
                 </>
               ) : (
                 getProjectsQuery.data?.map((project: Project) => (
-                  <ProjectCard key={project.id} project={project} />
+                  project.isFeatured ? (
+                    <FeaturedProjectCard key={project.id} project={project} />
+                  ) : (
+                    <ProjectCard key={project.id} project={project} />
+                  )
                 ))
               )
             }
-            <ProjectCard />
           </div>
         </CardContent>
 
