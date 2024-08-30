@@ -3,12 +3,10 @@ import { Card } from "../ui/card";
 import moment from "moment";
 import { useQuery } from "@tanstack/react-query";
 import { getTechnologies } from "@/api/technologies";
-import { Button } from "@/components/ui/button";
 import ProjectCardModal from "./projectCardModal";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
@@ -71,16 +69,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                     project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])).map((tech, index) => {
                       return (
                         <div key={index}>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
+                            </TooltipContent>
+                          </Tooltip>
                         </div>
                       )
                     })

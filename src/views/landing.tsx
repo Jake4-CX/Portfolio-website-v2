@@ -2,6 +2,7 @@ import ContactSection from "@/components/home/contact";
 import GithubCommits from "@/components/home/githubCommits";
 import HeroSection from "@/components/home/hero";
 import ProjectsSection from "@/components/home/projects";
+import TechSkillsComponent from "@/components/home/techSkills";
 import DefaultLayout from "@/layouts/defaultLayout";
 
 const LandingPage: React.FC = () => {
@@ -14,6 +15,7 @@ const LandingPage: React.FC = () => {
       {/* Hero */}
       <HeroSection />
       <ProjectsSection />
+      <TechSkillsComponent />
       <GithubCommits />
       <ContactSection />
     </DefaultLayout>

@@ -19,7 +19,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Github, Youtube } from "lucide-react";
@@ -58,16 +57,14 @@ const ProjectCardModal: React.FC<ProjectCardModalProps> = ({ project, technologi
                   {project.projectTechnologies &&
                     project.projectTechnologies.length > 0 &&
                     technologies.map((tech, index) => (
-                      <TooltipProvider key={index}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <Tooltip key={index}>
+                        <TooltipTrigger asChild>
+                          <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
+                        </TooltipContent>
+                      </Tooltip>
                     ))}
                 </div>
               </div>

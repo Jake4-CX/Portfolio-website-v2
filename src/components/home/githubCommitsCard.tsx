@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import moment from "moment";
@@ -37,18 +36,17 @@ const GithubCommitsCard: React.FC<GithubCommitsCardProps> = ({ githubCommits, mo
                   week.contributionDays.map((day, index) => {
                     return (
                       <div key={index}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="border-[1px] border-input rounded-[3px] h-[0.75rem] w-[0.75rem] dark:cursor-pointer" style={{ backgroundColor: backgroundColour(day, theme) }}></div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <div className="text-sm">
-                                <p>{day.contributionCount} contribution on {moment(day.date).format("MMMM Do, YYYY")}</p>
-                              </div>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="border-[1px] border-input rounded-[3px] h-[0.75rem] w-[0.75rem] dark:cursor-pointer" style={{ backgroundColor: backgroundColour(day, theme) }}></div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="text-sm">
+                              <p>{day.contributionCount} contribution on {moment(day.date).format("MMMM Do, YYYY")}</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+
                       </div>
                     )
                   })

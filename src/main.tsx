@@ -12,6 +12,7 @@ import LoginPage from '@/views/authentication/login';
 import RegisterPage from '@/views/authentication/register';
 import RequireAuth from '@/routes/requireAuth';
 import DashboardPage from '@/views/dashboard';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 
 const router = createBrowserRouter(
@@ -46,7 +47,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <AppInitializer>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <RouterProvider router={router} />
+          <TooltipProvider>
+            <RouterProvider router={router} />
+          </TooltipProvider>
         </ThemeProvider>
       </AppInitializer>
       <Toaster position='top-right' />
