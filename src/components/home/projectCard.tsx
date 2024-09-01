@@ -51,15 +51,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         {
           project ? (
             <>
-              <div className="flex flex-row">
+              <div className="flex flex-col sm:flex-row">
                 <h2 className="font-extrabold text-xl text-primary">{project.projectName}</h2>
                 {/* Start - Finish date */}
-                <div className="flex flex-row items-center space-x-2 ml-2">
-                  <div className="w-[6px] h-[6px] bg-gray-500 rounded-full" />
-                  <p className="text-xs text-gray-500 italic">({moment(project.startDate).format("Do MMM YY")} - {project.endDate ? moment(project.endDate).format("Do MMM YY") : "today"})</p>
+                <div className="flex flex-row items-center sm:space-x-2 sm:ml-2">
+                  <div className="hidden sm:block w-[6px] h-[6px] bg-gray-500 rounded-full" />
+                  <Tooltip delayDuration={200}>
+                    <TooltipTrigger asChild>
+                      <p className="text-xs text-gray-500 italic">({moment(project.startDate).format("Do MMM YY")} - {project.endDate ? moment(project.endDate).format("Do MMM YY") : "today"})</p>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {/* Duration - in days */}
+                      <p className="font-semibold text-sm">{moment(project.endDate).diff(moment(project.startDate), 'days')} days</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </div>
-              <p className="text-sm line-clamp-3 max-h-[80px]">{project.projectDescription}</p>
+              <p className="text-sm line-clamp-2 sm:line-clamp-3 max-h-[80px]">{project.projectDescription}</p>
 
               {/* Technologies used */}
               <div className="mt-2">
@@ -69,7 +77,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                     project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])).map((tech, index) => {
                       return (
                         <div key={index}>
-                          <Tooltip>
+                          <Tooltip delayDuration={200}>
                             <TooltipTrigger asChild>
                               <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
                             </TooltipTrigger>

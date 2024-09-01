@@ -37,7 +37,7 @@ const ProjectsSection: React.FC = () => {
                   <ProjectCard />
                 </>
               ) : (
-                getProjectsQuery.data?.map((project: Project) => (
+                sortProjects(getProjectsQuery.data ?? []).map((project: Project) => (
                   project.isFeatured ? (
                     <FeaturedProjectCard key={project.id} project={project} />
                   ) : (
@@ -52,6 +52,17 @@ const ProjectsSection: React.FC = () => {
       </Card>
     </>
   )
+}
+
+function sortProjects(projects: Project[]): Project[] {
+  return projects.sort((a, b) => {
+    if (a.isFeatured !== b.isFeatured) {
+      return a.isFeatured ? -1 : 1;
+    }
+    const endDateA = a.endDate ? new Date(a.endDate).getTime() : Infinity;
+    const endDateB = b.endDate ? new Date(b.endDate).getTime() : Infinity;
+    return endDateB - endDateA;
+  });
 }
 
 export default ProjectsSection;
