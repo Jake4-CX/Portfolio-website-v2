@@ -30,13 +30,7 @@ const ProjectsSection: React.FC = () => {
         <CardContent className="w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-[6%] lg:px-0 w-full">
             {
-              getProjectsQuery.isPending ? (
-                <>
-                  <FeaturedProjectCard />
-                  <ProjectCard />
-                  <ProjectCard />
-                </>
-              ) : (
+              !getProjectsQuery.isPending && getProjectsQuery.data ? (
                 sortProjects(getProjectsQuery.data ?? []).map((project: Project) => (
                   project.isFeatured ? (
                     <FeaturedProjectCard key={project.id} project={project} />
@@ -44,6 +38,12 @@ const ProjectsSection: React.FC = () => {
                     <ProjectCard key={project.id} project={project} />
                   )
                 ))
+              ) : (
+                <>
+                  <FeaturedProjectCard />
+                  <ProjectCard />
+                  <ProjectCard />
+                </>
               )
             }
           </div>
