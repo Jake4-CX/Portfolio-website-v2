@@ -58,7 +58,7 @@ const RegisterPage: React.FC = () => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { isPending } = useMutation({
     mutationFn: registerUser,
     mutationKey: ["registerUser"],
     onSuccess: () => {
@@ -79,7 +79,7 @@ const RegisterPage: React.FC = () => {
     }
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(_values: z.infer<typeof formSchema>) {
     // mutate(values);
     toast.error("The registration feature is currently disabled. Please try again later.");
   }
