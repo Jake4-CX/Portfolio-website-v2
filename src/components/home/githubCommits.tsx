@@ -7,14 +7,16 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import LoadingComponent from "../global/loading";
 
+const githubUsername = import.meta.env.VITE_GITHUB_PROFILE as string;
+
 const GithubCommits: React.FC = () => {
 
   const getGHCommits = useQuery({
-    queryKey: ["githubCommits", "Jake4-CX"],
+    queryKey: ["githubCommits", githubUsername],
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
 
-      const projectsResponse = await getGithubCommits("Jake4-CX");
+      const projectsResponse = await getGithubCommits(githubUsername);
       const data = (projectsResponse.data).data as GithubCommits;
 
       return data;
