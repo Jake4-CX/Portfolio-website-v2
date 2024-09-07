@@ -16,6 +16,9 @@ on:
   workflow_dispatch:
 env:
   DOCKER_USERNAME: jake4
+  VITE_API_ENDPOINT: https://jack.lat/api
+  VITE_GITHUB_PROFILE: Jake4-CX
+  VITE_RECAPTCHA_SITE_KEY: 6LddnhEoAAAAAD0_4JLROCI9H4mlARiYWLknJ3E5
 
 jobs:
   build-and-push:
@@ -44,6 +47,10 @@ jobs:
           context: .
           file: deployments/.dockerfile
           push: true
+          build-args: |
+            VITE_API_ENDPOINT=${{ env.VITE_API_ENDPOINT }}
+            VITE_GITHUB_PROFILE=${{ env.VITE_GITHUB_PROFILE }}
+            VITE_RECAPTCHA_SITE_KEY=${{ env.VITE_RECAPTCHA_SITE_KEY }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/portfolio-frontend:latest
             ${{ env.DOCKER_USERNAME }}/portfolio-frontend:${{ steps.get_version.outputs.version }}
