@@ -10,7 +10,7 @@ const FooterComponent: React.FC = () => {
             <section id="footer-left" className="flex flex-col max-w-[24.438rem] w-fit h-full">
               {/* <h1 className="text-5xl font-bold">Title</h1> */}
               <LogoComponent className="pb-2 w-fit" redirectPath="#" />
-              <p className="text-muted-foreground line-clamp-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tincidunt eget nullam non nisi est. Feugiat in fermentum posuere urna nec tincidunt. Donec enim diam vulputate ut pharetra sit amet aliquam.</p>
+              <p className="text-muted-foreground line-clamp-5">I'm Jack, a 22-year-old Computer Science graduate from the United Kingdom with a first-class honors degree, specializing in full-stack development using modern technologies like TypeScript, Go, and Docker. Explore my projects and see how I bring ideas to life.</p>
             </section>
 
 
