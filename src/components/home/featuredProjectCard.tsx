@@ -58,7 +58,7 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({ project }) =>
             <>
               <div className="w-full h-full flex flex-row sm:space-x-6">
                 <div className="w-fit h-full sm:block hidden">
-                  <div className="w-[9rem] max-w-[18rem] h-full bg-gray-300 rounded-lg overflow-hidden">
+                  <div className="w-[9rem] max-w-[18rem] h-full bg-secondary rounded-lg overflow-hidden">
                     <Carousel className="w-full h-full">
                       <CarouselContent>
                         {project.projectImages &&
@@ -69,7 +69,7 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({ project }) =>
                                 <img
                                   src={image.imageURL}
                                   alt={image.id.toString()}
-                                  className="object-cover w-full h-full"
+                                  className="object-cover object-center w-full h-[13.875rem]"
                                 />
                               </div>
                             </CarouselItem>
