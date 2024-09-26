@@ -77,27 +77,41 @@ const ProjectCardModal: React.FC<ProjectCardModalProps> = ({ project, technologi
           <div className="mt-2">
             <h3 className="font-bold text-sm">Project Images</h3>
             <div className="w-full h-[32rem] p-4 border border-input bg-background rounded-lg">
-              <Carousel className="w-fit">
-                <CarouselContent>
-                  {project.projectImages &&
-                    project.projectImages.length > 0 &&
-                    project.projectImages.map((image, index) => (
-                      <CarouselItem key={index}>
-                        <div className="p-1">
-                          <div className="relative w-full h-full">
-                            <img
-                              src={image.imageURL}
-                              alt={image.id.toString()}
-                              className="w-full max-h-[30rem] h-fit object-scale-down"
-                            />
-                          </div>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                </CarouselContent>
-                <CarouselPrevious className="absolute left-3" />
-                <CarouselNext className="absolute right-3" />
-              </Carousel>
+              {
+                project.projectImages && project.projectImages.length > 0 ? (
+                  <>
+                    <Carousel className="w-fit">
+                      <CarouselContent>
+                        {
+                          project.projectImages.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div className="p-1">
+                                <div className="relative w-full h-full">
+                                  <img
+                                    src={image.imageURL}
+                                    alt={image.id.toString()}
+                                    className="w-full h-[30rem] object-scale-down object-center"
+                                  />
+                                </div>
+                              </div>
+                            </CarouselItem>
+                          ))
+                        }
+                      </CarouselContent>
+                      <CarouselPrevious className="absolute left-3" />
+                      <CarouselNext className="absolute right-3" />
+                    </Carousel>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-full h-full flex flex-row sm:space-x-6">
+                      <div className="w-full h-full flex justify-center items-center">
+                        <p className="text-sm text-gray-500">No images available</p>
+                      </div>
+                    </div>
+                  </>
+                )
+              }
             </div>
           </div>
           <div className="flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0 pt-4">
