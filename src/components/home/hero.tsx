@@ -32,7 +32,7 @@ const HeroSection: React.FC = () => {
               </Link>
             </div>
           </div>
-          <div className="w-full bg-foreground min-h-[12rem] md:w-[24rem] md:h-[16rem] rounded-lg">
+          <div className="w-full bg-gray-300/25 min-h-[12rem] md:w-[24rem] md:h-[16rem] rounded-lg">
 
           </div>
         </div>
