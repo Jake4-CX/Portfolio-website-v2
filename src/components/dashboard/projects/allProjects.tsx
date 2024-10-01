@@ -29,10 +29,10 @@ export const columns: ColumnDef<Project>[] = [
     )
   },
   {
-    accessorKey: 'isFeatured',
-    header: 'Featured',
+    accessorKey: 'isEnabled',
+    header: 'Enabled',
     cell: ({ row }) => (
-      <Badge variant={row.original.isFeatured ? "default" : "destructive"}>
+      <Badge variant={row.original.isEnabled ? "default" : "destructive"}>
         {row.original.isFeatured ? "True" : "False"}
       </Badge>
     )

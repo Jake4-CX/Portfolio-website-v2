@@ -18,6 +18,7 @@ type Project = {
   isFeatured: boolean,
   startDate: Date | number,
   endDate: Date | number | null,
+  isEnabled: boolean,
   projectImages: ProjectImage[] | [] | null | undefined,
   projectTechnologies: ProjectTechnology[] | number[] | null | undefined,
   projectURLs: ProjectLinks | null | undefined

@@ -58,6 +58,7 @@ const formSchema = z.object({
   isFeatured: z.boolean(),
   startDate: z.date(),
   endDate: z.date().optional(), // Optional
+  isEnalbed: z.boolean(),
   projectTechnologies: z.array(z.string()).min(1, "At least one technology is required"),
   projectImages: z
     .array(z.instanceof(File))
@@ -85,6 +86,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({ project }) => {
       isFeatured: project.isFeatured,
       startDate: new Date(project.startDate), // Convert number to date
       endDate: project.endDate != null ? new Date(project.endDate) : undefined, // ToDo: Convert number to date
+      isEnalbed: project.isEnabled,
       // @ts-expect-error - projectTechnologies is expected to be an array of ProjectTechnology
       projectTechnologies: project.projectTechnologies?.map((technology: ProjectTechnology | number) => (!(technology instanceof Number)) ? technology.technologyId.toString() : null) ?? [],
       projectImages: [],
@@ -206,6 +208,7 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({ project }) => {
       isFeatured: data.isFeatured,
       startDate: (data.startDate instanceof Date) ? data.startDate.getTime() : data.startDate as number, // Turn date into number
       endDate: data.endDate ? data.endDate.getTime() : null, // Turn date into number
+      isEnabled: data.isEnalbed,
       projectTechnologies: data.projectTechnologies.map((techId) => parseInt(techId)),
       projectImages: undefined,
       projectURLs: {
@@ -293,6 +296,27 @@ const EditProjectModal: React.FC<EditProjectModalProps> = ({ project }) => {
                           <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
                             <Checkbox
                               id="isFeatured"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage {...field} />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Is Enabled */}
+                  <FormField
+                    control={form.control}
+                    name="isEnalbed"
+                    render={({ field }) => (
+                      <FormItem className="sm:w-1/3 justify-end">
+                        <FormLabel htmlFor="isEnalbed">Is Enabled</FormLabel>
+                        <FormControl>
+                          <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
+                            <Checkbox
+                              id="isEnalbed"
                               checked={field.value}
                               onCheckedChange={field.onChange}
                             />

@@ -32,10 +32,14 @@ const ProjectsSection: React.FC = () => {
             {
               !getProjectsQuery.isPending && getProjectsQuery.data ? (
                 sortProjects(getProjectsQuery.data ?? []).map((project: Project) => (
-                  project.isFeatured ? (
-                    <FeaturedProjectCard key={project.id} project={project} />
+                  project.isEnabled ? (
+                    project.isFeatured ? (
+                      <FeaturedProjectCard key={project.id} project={project} />
+                    ) : (
+                      <ProjectCard key={project.id} project={project} />
+                    )
                   ) : (
-                    <ProjectCard key={project.id} project={project} />
+                    <></>
                   )
                 ))
               ) : (
