@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ColumnDef, SortingState, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
-import { Images, RefreshCw } from "lucide-react";
+import { Images } from "lucide-react";
 import moment from "moment";
 import { useState } from "react";
 import EditProjectModal from "./editProject";
@@ -97,7 +97,7 @@ const AllProjectsComponent: React.FC<AllProjectsComponentProps> = ({ projects })
 
   return (
     <>
-      <Table>
+      <Table className="min-h-[26.219rem]">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -142,7 +142,8 @@ const AllProjectsComponent: React.FC<AllProjectsComponentProps> = ({ projects })
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="text-center">
-                <RefreshCw className="animate-spin w-6 h-6" />
+                <span className="mr-2">Loading...</span>
+                {/* <RefreshCw className="animate-spin w-6 h-6" /> */}
               </TableCell>
             </TableRow>
           )}
