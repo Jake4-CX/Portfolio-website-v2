@@ -67,6 +67,7 @@ const formSchema = z.object({
   isFeatured: z.boolean(),
   startDate: z.date(),
   endDate: z.date().optional(), // Optional
+  isEnabled: z.boolean(),
   projectTechnologies: z.array(z.string()).min(1, "At least one technology is required"),
   projectImages: z
     .array(z.instanceof(File))
@@ -186,6 +187,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = () => {
       isFeatured: data.isFeatured,
       startDate: (data.startDate instanceof Date) ? data.startDate.getTime() : data.startDate as number, // Turn date into number
       endDate: data.endDate ? data.endDate.getTime() : null, // Turn date into number
+      isEnabled: data.isEnabled,
       projectTechnologies: data.projectTechnologies.map((techId) => parseInt(techId)),
       projectImages: undefined,
       projectURLs: {
@@ -271,6 +273,28 @@ const AddProjectModal: React.FC<AddProjectModalProps> = () => {
                             <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
                               <Checkbox
                                 id="isFeatured"
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage {...field} />
+                        </FormItem>
+                      )}
+                    />
+
+
+                    {/* Is Enabled */}
+                    <FormField
+                      control={form.control}
+                      name="isEnabled"
+                      render={({ field }) => (
+                        <FormItem className="sm:w-1/3 justify-end">
+                          <FormLabel htmlFor="isEnabled">Is Enabled</FormLabel>
+                          <FormControl>
+                            <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
+                              <Checkbox
+                                id="isEnabled"
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
                               />
