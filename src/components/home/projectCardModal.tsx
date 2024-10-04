@@ -76,7 +76,7 @@ const ProjectCardModal: React.FC<ProjectCardModalProps> = ({ project, technologi
           </div>
           <div className="mt-2">
             <h3 className="font-bold text-sm">Project Images</h3>
-            <div className="w-full h-[32rem] p-4 border border-input bg-background rounded-lg">
+            <div className="w-full h-fit md:h-[32rem] p-4 border border-input bg-background rounded-lg">
               {
                 project.projectImages && project.projectImages.length > 0 ? (
                   <>
@@ -84,13 +84,13 @@ const ProjectCardModal: React.FC<ProjectCardModalProps> = ({ project, technologi
                       <CarouselContent>
                         {
                           project.projectImages.map((image, index) => (
-                            <CarouselItem key={index}>
+                            <CarouselItem key={index} className="flex items-center justify-center">
                               <div className="p-1">
                                 <div className="relative w-full h-full">
                                   <img
                                     src={image.imageURL}
                                     alt={image.id.toString()}
-                                    className="w-full h-[30rem] object-scale-down object-center"
+                                    className="w-full h-fit max-h-[18rem] md:max-h-[30rem] object-scale-down object-center"
                                   />
                                 </div>
                               </div>
