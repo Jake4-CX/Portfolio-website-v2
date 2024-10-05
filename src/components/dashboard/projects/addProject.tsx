@@ -241,295 +241,296 @@ const AddProjectModal: React.FC<AddProjectModalProps> = () => {
             </DialogHeader>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8">
+              <form onSubmit={form.handleSubmit(onSubmit, onError)}>
 
                 <ScrollArea className="whitespace-nowrap w-full h-[30rem] lg:max-h-[42rem]">
+                  <div className="space-y-2">
 
-                  <div className="flex flex-col sm:flex-row justify-between content-end sm:space-x-3 space-y-3 sm:space-y-0">
-                    {/* Project Name */}
+                    <div className="flex flex-col sm:flex-row justify-between content-end sm:space-x-3 space-y-3 sm:space-y-0">
+                      {/* Project Name */}
+                      <FormField
+                        control={form.control}
+                        name="projectName"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel htmlFor="projectName">Project Name<span className="text-red-500">*</span></FormLabel>
+                            <Input
+                              id="projectName"
+                              {...field}
+                              className="col-span-3"
+                              type="text"
+                              placeholder="Enter project name"
+                            />
+                            <FormMessage {...field} />
+                          </FormItem>
+                        )}
+                      />
+
+                      {/* Is Featured */}
+                      <FormField
+                        control={form.control}
+                        name="isFeatured"
+                        render={({ field }) => (
+                          <FormItem className="sm:w-1/3 justify-end">
+                            <FormLabel htmlFor="isFeatured">Is Featured</FormLabel>
+                            <FormControl>
+                              <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
+                                <Checkbox
+                                  id="isFeatured"
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage {...field} />
+                          </FormItem>
+                        )}
+                      />
+
+
+                      {/* Is Enabled */}
+                      <FormField
+                        control={form.control}
+                        name="isEnabled"
+                        render={({ field }) => (
+                          <FormItem className="sm:w-1/3 justify-end">
+                            <FormLabel htmlFor="isEnabled">Is Enabled</FormLabel>
+                            <FormControl>
+                              <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
+                                <Checkbox
+                                  id="isEnabled"
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage {...field} />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    {/* Project Description */}
                     <FormField
                       control={form.control}
-                      name="projectName"
+                      name="projectDescription"
                       render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel htmlFor="projectName">Project Name<span className="text-red-500">*</span></FormLabel>
-                          <Input
-                            id="projectName"
+                        <FormItem>
+                          <FormLabel htmlFor="projectDescription">Project Description<span className="text-red-500">*</span></FormLabel>
+                          <Textarea
+                            placeholder="Enter project description"
                             {...field}
                             className="col-span-3"
-                            type="text"
-                            placeholder="Enter project name"
                           />
                           <FormMessage {...field} />
                         </FormItem>
                       )}
                     />
 
-                    {/* Is Featured */}
+                    <div className="flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0">
+                      {/* Start Date */}
+                      <FormField
+                        control={form.control}
+                        name="startDate"
+                        render={({ field }) => (
+                          <>
+                            <FormItem className="flex flex-col">
+                              <FormLabel htmlFor="startDate">Start Date<span className="text-red-500">*</span></FormLabel>
+                              <Popover modal={true}>
+                                <PopoverTrigger asChild>
+                                  <FormControl>
+                                    <Button
+                                      variant={"outline"}
+                                      className={cn(
+                                        "w-full sm:w-[240px] pl-3 text-left font-normal",
+                                        !field.value && "text-muted-foreground"
+                                      )}
+                                    >
+                                      {field.value ? (
+                                        format(field.value, "PPP")
+                                      ) : (
+                                        <span>Pick a date</span>
+                                      )}
+                                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                    </Button>
+                                  </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                  <Calendar
+                                    mode="single"
+                                    selected={new Date(field.value)}
+                                    onSelect={field.onChange}
+                                    disabled={(date) =>
+                                      date > new Date() || date < new Date("1900-01-01")
+                                    }
+                                    initialFocus
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                              <FormMessage />
+                            </FormItem>
+                          </>
+                        )}
+                      />
+
+                      {/* End Date */}
+                      <FormField
+                        control={form.control}
+                        name="endDate"
+                        render={({ field }) => (
+                          <>
+                            <FormItem className="flex flex-col">
+                              <FormLabel htmlFor="endDate">End Date</FormLabel>
+                              <Popover modal={true}>
+                                <PopoverTrigger asChild>
+                                  <FormControl>
+                                    <Button
+                                      variant={"outline"}
+                                      className={cn(
+                                        "w-full sm:w-[240px] pl-3 text-left font-normal",
+                                        !field.value && "text-muted-foreground"
+                                      )}
+                                      disabled={!form.getValues("startDate")}
+                                    >
+                                      {field.value ? (
+                                        format(field.value, "PPP")
+                                      ) : (
+                                        <span>Pick a date</span>
+                                      )}
+                                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                    </Button>
+                                  </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                  <Calendar
+                                    mode="single"
+                                    selected={field.value ? new Date(field.value) : new Date()}
+                                    onSelect={field.onChange}
+                                    disabled={(date) =>
+                                      date > new Date() || date < new Date("1900-01-01") || date < new Date(form.getValues("startDate"))
+                                    }
+                                    initialFocus
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                              <FormMessage />
+                            </FormItem>
+                          </>
+                        )}
+                      />
+                    </div>
+
+                    {/* Project Technologies - Multiple select box - TODO */}
                     <FormField
                       control={form.control}
-                      name="isFeatured"
+                      name="projectTechnologies"
                       render={({ field }) => (
-                        <FormItem className="sm:w-1/3 justify-end">
-                          <FormLabel htmlFor="isFeatured">Is Featured</FormLabel>
+                        <FormItem>
+                          <FormLabel htmlFor="projectTechnologies">Project Technologies<span className="text-red-500">*</span></FormLabel>
                           <FormControl>
-                            <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
-                              <Checkbox
-                                id="isFeatured"
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </div>
+                            <MultipleSelector
+                              {...field}
+                              options={optionsTechnologies} // Convert options to array of Option objects
+                              hidePlaceholderWhenSelected
+                            />
                           </FormControl>
-                          <FormMessage {...field} />
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
 
 
-                    {/* Is Enabled */}
+                    {/* Project Photos uploader */}
                     <FormField
                       control={form.control}
-                      name="isEnabled"
+                      name="projectImages"
                       render={({ field }) => (
-                        <FormItem className="sm:w-1/3 justify-end">
-                          <FormLabel htmlFor="isEnabled">Is Enabled</FormLabel>
-                          <FormControl>
-                            <div className="flex flex-row justify-center space-x-3 space-y-0 rounded-md border px-2 py-[11px] w-full h-fit">
-                              <Checkbox
-                                id="isEnabled"
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage {...field} />
+                        <FormItem>
+                          <FormLabel htmlFor="projectPhotos">Project Images</FormLabel>
+                          <FileUploader
+                            value={files}
+                            onValueChange={(uploadedFiles) => {
+                              setFiles(uploadedFiles);
+                              form.setValue(field.name, uploadedFiles || []);
+                            }}
+                            dropzoneOptions={dropZoneConfig}
+                            className="relative bg-background rounded-lg p-2"
+                          >
+                            <FileUploadCard files={files} />
+                          </FileUploader>
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
+
+                    {/* Project Links */}
+
+                    <Accordion type="single" collapsible>
+                      <AccordionItem value="item-1">
+                        <AccordionTrigger>Project Links</AccordionTrigger>
+                        <AccordionContent>
+                          <ScrollArea className="h-fit w-full rounded-md border p-4">
+                            <div className="space-y-4">
+                              {/* GitHub Repo URL */}
+                              <FormField
+                                control={form.control}
+                                name="githubURL"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel htmlFor="githubURL">GitHub Repo URL</FormLabel>
+                                    <Input
+                                      id="githubURL"
+                                      {...field}
+                                      type="text"
+                                      placeholder="Enter GitHub repo URL"
+                                    />
+                                    <FormMessage {...field} />
+                                  </FormItem>
+                                )}
+                              />
+
+                              {/* Deployed Website URL */}
+                              <FormField
+                                control={form.control}
+                                name="websiteURL"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel htmlFor="websiteURL">Deployed Website URL</FormLabel>
+                                    <Input
+                                      id="websiteURL"
+                                      {...field}
+                                      type="text"
+                                      placeholder="Enter deployed website URL"
+                                    />
+                                    <FormMessage {...field} />
+                                  </FormItem>
+                                )}
+                              />
+
+                              {/* YouTube Video URL */}
+                              <FormField
+                                control={form.control}
+                                name="youtubeURL"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel htmlFor="youtubeURL">YouTube Video URL</FormLabel>
+                                    <Input
+                                      id="youtubeURL"
+                                      {...field}
+                                      type="text"
+                                      placeholder="Enter YouTube video URL"
+                                    />
+                                    <FormMessage {...field} />
+                                  </FormItem>
+                                )}
+                              />
+
+                            </div>
+                          </ScrollArea>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </div>
-
-                  {/* Project Description */}
-                  <FormField
-                    control={form.control}
-                    name="projectDescription"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="projectDescription">Project Description<span className="text-red-500">*</span></FormLabel>
-                        <Textarea
-                          placeholder="Enter project description"
-                          {...field}
-                          className="col-span-3"
-                        />
-                        <FormMessage {...field} />
-                      </FormItem>
-                    )}
-                  />
-
-                  <div className="flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0">
-                    {/* Start Date */}
-                    <FormField
-                      control={form.control}
-                      name="startDate"
-                      render={({ field }) => (
-                        <>
-                          <FormItem className="flex flex-col">
-                            <FormLabel htmlFor="startDate">Start Date<span className="text-red-500">*</span></FormLabel>
-                            <Popover modal={true}>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                      "w-full sm:w-[240px] pl-3 text-left font-normal",
-                                      !field.value && "text-muted-foreground"
-                                    )}
-                                  >
-                                    {field.value ? (
-                                      format(field.value, "PPP")
-                                    ) : (
-                                      <span>Pick a date</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                  mode="single"
-                                  selected={new Date(field.value)}
-                                  onSelect={field.onChange}
-                                  disabled={(date) =>
-                                    date > new Date() || date < new Date("1900-01-01")
-                                  }
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage />
-                          </FormItem>
-                        </>
-                      )}
-                    />
-
-                    {/* End Date */}
-                    <FormField
-                      control={form.control}
-                      name="endDate"
-                      render={({ field }) => (
-                        <>
-                          <FormItem className="flex flex-col">
-                            <FormLabel htmlFor="endDate">End Date</FormLabel>
-                            <Popover modal={true}>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                      "w-full sm:w-[240px] pl-3 text-left font-normal",
-                                      !field.value && "text-muted-foreground"
-                                    )}
-                                    disabled={!form.getValues("startDate")}
-                                  >
-                                    {field.value ? (
-                                      format(field.value, "PPP")
-                                    ) : (
-                                      <span>Pick a date</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                  mode="single"
-                                  selected={field.value ? new Date(field.value) : new Date()}
-                                  onSelect={field.onChange}
-                                  disabled={(date) =>
-                                    date > new Date() || date < new Date("1900-01-01") || date < new Date(form.getValues("startDate"))
-                                  }
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage />
-                          </FormItem>
-                        </>
-                      )}
-                    />
-                  </div>
-
-                  {/* Project Technologies - Multiple select box - TODO */}
-                  <FormField
-                    control={form.control}
-                    name="projectTechnologies"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="projectTechnologies">Project Technologies<span className="text-red-500">*</span></FormLabel>
-                        <FormControl>
-                          <MultipleSelector
-                            {...field}
-                            options={optionsTechnologies} // Convert options to array of Option objects
-                            hidePlaceholderWhenSelected
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-
-                  {/* Project Photos uploader */}
-                  <FormField
-                    control={form.control}
-                    name="projectImages"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="projectPhotos">Project Images</FormLabel>
-                        <FileUploader
-                          value={files}
-                          onValueChange={(uploadedFiles) => {
-                            setFiles(uploadedFiles);
-                            form.setValue(field.name, uploadedFiles || []);
-                          }}
-                          dropzoneOptions={dropZoneConfig}
-                          className="relative bg-background rounded-lg p-2"
-                        >
-                          <FileUploadCard files={files} />
-                        </FileUploader>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  {/* Project Links */}
-
-                  <Accordion type="single" collapsible>
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger>Project Links</AccordionTrigger>
-                      <AccordionContent>
-                        <ScrollArea className="h-fit w-full rounded-md border p-4">
-                          <div className="space-y-4">
-                            {/* GitHub Repo URL */}
-                            <FormField
-                              control={form.control}
-                              name="githubURL"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel htmlFor="githubURL">GitHub Repo URL</FormLabel>
-                                  <Input
-                                    id="githubURL"
-                                    {...field}
-                                    type="text"
-                                    placeholder="Enter GitHub repo URL"
-                                  />
-                                  <FormMessage {...field} />
-                                </FormItem>
-                              )}
-                            />
-
-                            {/* Deployed Website URL */}
-                            <FormField
-                              control={form.control}
-                              name="websiteURL"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel htmlFor="websiteURL">Deployed Website URL</FormLabel>
-                                  <Input
-                                    id="websiteURL"
-                                    {...field}
-                                    type="text"
-                                    placeholder="Enter deployed website URL"
-                                  />
-                                  <FormMessage {...field} />
-                                </FormItem>
-                              )}
-                            />
-
-                            {/* YouTube Video URL */}
-                            <FormField
-                              control={form.control}
-                              name="youtubeURL"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel htmlFor="youtubeURL">YouTube Video URL</FormLabel>
-                                  <Input
-                                    id="youtubeURL"
-                                    {...field}
-                                    type="text"
-                                    placeholder="Enter YouTube video URL"
-                                  />
-                                  <FormMessage {...field} />
-                                </FormItem>
-                              )}
-                            />
-
-                          </div>
-                        </ScrollArea>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-
                 </ScrollArea>
 
 
