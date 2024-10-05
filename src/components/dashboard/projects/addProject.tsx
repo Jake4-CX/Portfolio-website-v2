@@ -238,9 +238,12 @@ const AddProjectModal: React.FC<AddProjectModalProps> = () => {
               <DialogDescription>
                 Fill in the details below to add a new project
               </DialogDescription>
+            </DialogHeader>
 
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8">
+
+                <ScrollArea className="whitespace-nowrap w-full h-[30rem] lg:max-h-[42rem]">
 
                   <div className="flex flex-col sm:flex-row justify-between content-end sm:space-x-3 space-y-3 sm:space-y-0">
                     {/* Project Name */}
@@ -465,7 +468,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = () => {
                     <AccordionItem value="item-1">
                       <AccordionTrigger>Project Links</AccordionTrigger>
                       <AccordionContent>
-                        <ScrollArea className="h-[8rem] w-full rounded-md border p-4">
+                        <ScrollArea className="h-fit w-full rounded-md border p-4">
                           <div className="space-y-4">
                             {/* GitHub Repo URL */}
                             <FormField
@@ -527,27 +530,28 @@ const AddProjectModal: React.FC<AddProjectModalProps> = () => {
                     </AccordionItem>
                   </Accordion>
 
+                </ScrollArea>
 
-                  {/* Submit */}
-                  <DialogFooter>
-                    <Button type="submit" className="select-none" disabled={isPending}>
-                      {
-                        isPending ? (
-                          <>
-                            <RefreshCw className="animate-spin w-4 h-4 mr-2" />
-                            Adding...
-                          </>
-                        ) : (
-                          <>
-                            Add Project
-                          </>
-                        )
-                      }
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </Form>
-            </DialogHeader>
+
+                {/* Submit */}
+                <DialogFooter>
+                  <Button type="submit" className="select-none" disabled={isPending}>
+                    {
+                      isPending ? (
+                        <>
+                          <RefreshCw className="animate-spin w-4 h-4 mr-2" />
+                          Adding...
+                        </>
+                      ) : (
+                        <>
+                          Add Project
+                        </>
+                      )
+                    }
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
           </DialogContent>
         </DialogPortal>
       </Dialog>
