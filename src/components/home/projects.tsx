@@ -27,7 +27,7 @@ const ProjectsSection: React.FC = () => {
           <CardTitle>Projects</CardTitle>
           <CardDescription>Here are a few projects</CardDescription>
         </CardHeader>
-        <CardContent className="w-full">
+        <CardContent className="w-full px-0 lg:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-[6%] lg:px-0 w-full">
             {
               !getProjectsQuery.isPending && getProjectsQuery.data ? (
