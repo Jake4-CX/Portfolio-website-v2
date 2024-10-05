@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { uploadImage } from "@/lib/uploadS3";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -154,77 +155,82 @@ const AddTechnologyModal: React.FC<AddTechnologyModalProps> = () => {
             </DialogHeader>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8">
-                {/* Technology Name */}
-                <FormField
-                  control={form.control}
-                  name="technologyName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="technologyName">Technology Name<span className="text-red-500">*</span></FormLabel>
-                      <Input
-                        id="technologyName"
-                        {...field}
-                        className="col-span-3"
-                        type="text"
-                        placeholder="Enter technology name"
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+                <ScrollArea className="whitespace-nowrap w-full max-h-[30rem] lg:max-h-[42rem]">
+                  <div className="space-y-2">
+                    {/* Technology Name */}
+                    <FormField
+                      control={form.control}
+                      name="technologyName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="technologyName">Technology Name<span className="text-red-500">*</span></FormLabel>
+                          <Input
+                            id="technologyName"
+                            {...field}
+                            className="col-span-3"
+                            type="text"
+                            placeholder="Enter technology name"
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                {/* Technology Type */}
-                <FormField
-                  control={form.control}
-                  name="technologyType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="technologyType">Technology Type<span className="text-red-500">*</span></FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select technology type" />
-                          </SelectTrigger>
-                        </FormControl>
+                    {/* Technology Type */}
+                    <FormField
+                      control={form.control}
+                      name="technologyType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="technologyType">Technology Type<span className="text-red-500">*</span></FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select technology type" />
+                              </SelectTrigger>
+                            </FormControl>
 
-                        <SelectContent>
-                          {
-                            technologyTypes.map((item) => (
-                              <SelectItem key={item.value} value={item.value}>
-                                {item.label}
-                              </SelectItem>
-                            ))
-                          }
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                            <SelectContent>
+                              {
+                                technologyTypes.map((item) => (
+                                  <SelectItem key={item.value} value={item.value}>
+                                    {item.label}
+                                  </SelectItem>
+                                ))
+                              }
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                {/* Technology Image - Upload Image */}
-                <FormField
-                  control={form.control}
-                  name="technologyImage"
-                  render={() => (
-                    <FormItem>
-                      <FormLabel htmlFor="technologyImage">Technology Image<span className="text-red-500">*</span></FormLabel>
-                      <FileUploader
-                        value={files}
-                        onValueChange={(uploadedFiles) => {
-                          setFiles(uploadedFiles);
-                          form.setValue("technologyImage", uploadedFiles || []);
-                        }}
-                        dropzoneOptions={dropZoneConfig}
-                        className="relative bg-background rounded-lg p-2"
-                      >
-                        <FileUploadCard files={files} />
-                      </FileUploader>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    {/* Technology Image - Upload Image */}
+                    <FormField
+                      control={form.control}
+                      name="technologyImage"
+                      render={() => (
+                        <FormItem>
+                          <FormLabel htmlFor="technologyImage">Technology Image<span className="text-red-500">*</span></FormLabel>
+                          <FileUploader
+                            value={files}
+                            onValueChange={(uploadedFiles) => {
+                              setFiles(uploadedFiles);
+                              form.setValue("technologyImage", uploadedFiles || []);
+                            }}
+                            dropzoneOptions={dropZoneConfig}
+                            className="relative bg-background rounded-lg p-2"
+                          >
+                            <FileUploadCard files={files} />
+                          </FileUploader>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                  </div>
+                </ScrollArea>
 
                 <DialogFooter>
                   <Button type="submit" className="select-none" disabled={isPending}>

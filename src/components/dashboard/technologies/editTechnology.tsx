@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { urlToFile } from "@/lib/technology";
 import { uploadImage } from "@/lib/uploadS3";
@@ -163,116 +164,122 @@ const EditTechnologyModal: React.FC<EditTechnologyModalProps> = ({ technology })
             </DialogHeader>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8">
-                {/* Technology Name */}
-                <FormField
-                  control={form.control}
-                  name="technologyName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="technologyName">Technology Name<span className="text-red-500">*</span></FormLabel>
-                      <Input
-                        id="technologyName"
-                        {...field}
-                        className="col-span-3"
-                        type="text"
-                        placeholder="Enter technology name"
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+                <ScrollArea className="whitespace-nowrap w-full max-h-[30rem] lg:max-h-[42rem]">
+                  <div className="space-y-2">
 
-                {/* Technology Type */}
-                <FormField
-                  control={form.control}
-                  name="technologyType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="technologyType">Technology Type<span className="text-red-500">*</span></FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select technology type" />
-                          </SelectTrigger>
-                        </FormControl>
+                    {/* Technology Name */}
+                    <FormField
+                      control={form.control}
+                      name="technologyName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="technologyName">Technology Name<span className="text-red-500">*</span></FormLabel>
+                          <Input
+                            id="technologyName"
+                            {...field}
+                            className="col-span-3"
+                            type="text"
+                            placeholder="Enter technology name"
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                        <SelectContent>
-                          {
-                            technologyTypes.map((item) => (
-                              <SelectItem key={item.value} value={item.value}>
-                                {item.label}
-                              </SelectItem>
-                            ))
-                          }
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    {/* Technology Type */}
+                    <FormField
+                      control={form.control}
+                      name="technologyType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel htmlFor="technologyType">Technology Type<span className="text-red-500">*</span></FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select technology type" />
+                              </SelectTrigger>
+                            </FormControl>
 
-                {/* Technology Image - Upload Image */}
-                <FormField
-                  control={form.control}
-                  name="technologyImage"
-                  render={() => (
-                    <FormItem>
-                      <FormLabel htmlFor="technologyImage">Technology Image<span className="text-red-500">*</span></FormLabel>
-                      <FileUploader
-                        value={files}
-                        onValueChange={(uploadedFiles) => {
-                          setFiles(uploadedFiles);
-                          form.setValue("technologyImage", uploadedFiles || []);
-                        }}
-                        dropzoneOptions={dropZoneConfig}
-                        className="relative bg-background rounded-lg p-2"
-                      >
-                        <FileInput className="outline-dashed outline-1 outline-white">
-                          <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full ">
-                            <svg
-                              className="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 20 16"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                              />
-                            </svg>
-                            <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                              <span className="font-semibold">Click to upload</span>
-                              &nbsp; or drag and drop
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                              SVG, PNG, JPG or GIF
-                            </p>
-                          </div>
-                        </FileInput>
-                        <FileUploaderContent>
-                          {
-                            files?.map((file, i) => (
-                              <FileUploaderItem key={i} index={i} aria-roledescription={`${file.name}`} className="h-fit items-center justify-center">
-                                <img
-                                  src={URL.createObjectURL(file)}
-                                  alt={file.name}
-                                  className="h-8 w-8"
-                                />
-                                <span>{file.name}</span>
-                              </FileUploaderItem>
-                            ))
-                          }
-                        </FileUploaderContent>
-                      </FileUploader>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                            <SelectContent>
+                              {
+                                technologyTypes.map((item) => (
+                                  <SelectItem key={item.value} value={item.value}>
+                                    {item.label}
+                                  </SelectItem>
+                                ))
+                              }
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Technology Image - Upload Image */}
+                    <FormField
+                      control={form.control}
+                      name="technologyImage"
+                      render={() => (
+                        <FormItem>
+                          <FormLabel htmlFor="technologyImage">Technology Image<span className="text-red-500">*</span></FormLabel>
+                          <FileUploader
+                            value={files}
+                            onValueChange={(uploadedFiles) => {
+                              setFiles(uploadedFiles);
+                              form.setValue("technologyImage", uploadedFiles || []);
+                            }}
+                            dropzoneOptions={dropZoneConfig}
+                            className="relative bg-background rounded-lg p-2"
+                          >
+                            <FileInput className="outline-dashed outline-1 outline-white">
+                              <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full ">
+                                <svg
+                                  className="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 20 16"
+                                >
+                                  <path
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                  />
+                                </svg>
+                                <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                                  <span className="font-semibold">Click to upload</span>
+                                  &nbsp; or drag and drop
+                                </p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  SVG, PNG, JPG or GIF
+                                </p>
+                              </div>
+                            </FileInput>
+                            <FileUploaderContent>
+                              {
+                                files?.map((file, i) => (
+                                  <FileUploaderItem key={i} index={i} aria-roledescription={`${file.name}`} className="h-fit items-center justify-center">
+                                    <img
+                                      src={URL.createObjectURL(file)}
+                                      alt={file.name}
+                                      className="h-8 w-8"
+                                    />
+                                    <span>{file.name}</span>
+                                  </FileUploaderItem>
+                                ))
+                              }
+                            </FileUploaderContent>
+                          </FileUploader>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                  </div>
+                </ScrollArea>
 
                 <DialogFooter>
                   <Button type="submit" className="select-none" disabled={isPending}>
