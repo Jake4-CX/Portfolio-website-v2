@@ -9,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 
 
@@ -51,51 +52,55 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         {
           project ? (
             <>
-              <div className="flex flex-col sm:flex-row">
-                <h2 className="font-extrabold text-xl text-primary">{project.projectName}</h2>
-                {/* Start - Finish date */}
-                <div className="flex flex-row items-center sm:space-x-2 sm:ml-2">
-                  <div className="hidden sm:block w-[6px] h-[6px] bg-gray-500 rounded-full" />
-                  <Tooltip delayDuration={200}>
-                    <TooltipTrigger asChild>
-                      <p className="text-xs text-gray-500 italic">({moment(project.startDate).format("Do MMM YY")} - {project.endDate ? moment(project.endDate).format("Do MMM YY") : "today"})</p>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      {/* Duration - in days */}
-                      <p className="font-semibold text-sm">{moment(project.endDate).diff(moment(project.startDate), 'days')} days</p>
-                    </TooltipContent>
-                  </Tooltip>
+              <div className="relative w-full h-full">
+                <div className="flex flex-col sm:flex-row">
+                  <h2 className="font-extrabold text-xl text-primary">{project.projectName}</h2>
+                  {/* Start - Finish date */}
+                  <div className="flex flex-row items-center sm:space-x-2 sm:ml-2">
+                    <div className="hidden sm:block w-[6px] h-[6px] bg-gray-500 rounded-full" />
+                    <Tooltip delayDuration={200}>
+                      <TooltipTrigger asChild>
+                        <p className="text-xs text-gray-500 italic">({moment(project.startDate).format("Do MMM YY")} - {project.endDate ? moment(project.endDate).format("Do MMM YY") : "today"})</p>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {/* Duration - in days */}
+                        <p className="font-semibold text-sm">{moment(project.endDate).diff(moment(project.startDate), 'days')} days</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </div>
+                <p className="text-sm line-clamp-2 sm:line-clamp-3 max-h-[80px]">{project.projectDescription}</p>
+
+                {/* Technologies used */}
+                <div className="mt-2">
+                  <h3 className="font-bold text-sm">Technologies Used</h3>
+                  <ScrollArea className="whitespace-nowrap w-full min-h-[2rem] flex items-center justify-center border border-input bg-background rounded-lg mt-2">
+                    <div className="flex flex-row min-w-fit w-full h-full items-center justify-start space-x-3 relative px-2">
+                      {
+                        project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])).map((tech, index) => {
+                          return (
+                            <div key={index} className="shrink-0">
+                              <Tooltip delayDuration={200}>
+                                <TooltipTrigger asChild>
+                                  <img src={tech.technologyImage ?? ""} alt={tech.technologyName} width={24} height={24} className="rounded-full" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
+                                </TooltipContent>
+                              </Tooltip>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                    <ScrollBar orientation="horizontal" />
+                  </ScrollArea>
+                </div>
+
+                <div className="absolute flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0">
+                  <ProjectCardModal project={project} technologies={convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])} />
                 </div>
               </div>
-              <p className="text-sm line-clamp-2 sm:line-clamp-3 max-h-[80px]">{project.projectDescription}</p>
-
-              {/* Technologies used */}
-              <div className="mt-2">
-                <h3 className="font-bold text-sm mt-2">Technologies Used</h3>
-                <div className="w-full h-[2rem] px-2 py-1 border border-input bg-background rounded-lg relative flex flex-row items-center space-x-3 mt-2">
-                  {
-                    project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])).map((tech, index) => {
-                      return (
-                        <div key={index}>
-                          <Tooltip delayDuration={200}>
-                            <TooltipTrigger asChild>
-                              <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      )
-                    })
-                  }
-                </div>
-              </div>
-
-              <div className="absolute flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0 p-4">
-                <ProjectCardModal project={project} technologies={convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])} />
-              </div>
-
             </>
           ) : (
             <>
@@ -112,7 +117,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               </div>
 
               <div className="absolute flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0 p-4">
-                <div className="h-[40px] w-[112px] bg-gray-300 rounded-lg animate-pulse" />
+                <div className="h-[40px] w-full sm:w-[112px] bg-gray-300 rounded-lg animate-pulse" />
               </div>
             </>
           )

@@ -16,6 +16,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 type FeaturedProjectCardProps = {
   project?: Project
@@ -69,7 +70,7 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({ project }) =>
                                 <img
                                   src={image.imageURL}
                                   alt={image.id.toString()}
-                                  className="object-cover object-center w-full h-[13.875rem]"
+                                  className="object-cover object-center w-full h-[13.875rem] select-none"
                                 />
                               </div>
                             </CarouselItem>
@@ -103,27 +104,30 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({ project }) =>
                   {/* Technologies used */}
                   <div className="mt-2">
                     <h3 className="font-bold text-sm">Technologies Used</h3>
-                    <div className="w-full h-[2rem] px-2 py-1 border border-input bg-background rounded-lg relative flex flex-row items-center space-x-3 mt-2">
-                      {
-                        project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])).map((tech, index) => {
-                          return (
-                            <div key={index}>
-                              <Tooltip delayDuration={200}>
-                                <TooltipTrigger asChild>
-                                  <img src={tech.technologyImage ?? ""} alt={tech.technologyName} className="w-6 h-6 rounded-full" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
-                                </TooltipContent>
-                              </Tooltip>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
+                    <ScrollArea className="whitespace-nowrap w-full min-h-[2rem] flex items-center justify-center border border-input bg-background rounded-lg mt-2">
+                      <div className="flex flex-row min-w-fit w-full h-full items-center justify-start space-x-3 relative px-2">
+                        {
+                          project.projectTechnologies && project.projectTechnologies.length > 0 && sortTechnology(convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])).map((tech, index) => {
+                            return (
+                              <div key={index} className="shrink-0">
+                                <Tooltip delayDuration={200}>
+                                  <TooltipTrigger asChild>
+                                    <img src={tech.technologyImage ?? ""} alt={tech.technologyName} width={24} height={24} className="rounded-full" />
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <h4 className="font-semibold text-sm">{tech.technologyName}</h4>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                      <ScrollBar orientation="horizontal" />
+                    </ScrollArea>
                   </div>
 
-                  <div className="absolute flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0 p-4">
+                  <div className="absolute flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0">
                     <ProjectCardModal project={project} technologies={convertProjectTechnologyToTechnology(project.projectTechnologies as ProjectTechnology[])} />
                   </div>
                 </div>
@@ -155,7 +159,7 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({ project }) =>
                 </div>
 
                 <div className="absolute flex flex-row items-end justify-end space-x-3 inset-x-0 bottom-0">
-                  <div className="h-[40px] w-[112px] bg-gray-300 rounded-lg animate-pulse" />
+                  <div className="h-[40px] w-full sm:w-[112px] bg-gray-300 rounded-lg animate-pulse" />
                 </div>
 
               </div>
