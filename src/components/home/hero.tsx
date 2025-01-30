@@ -18,10 +18,12 @@ const HeroSection: React.FC = () => {
                 <span>Download CV</span>
               </button> */}
               {/* Download CV */}
-              <Button variant={"outline"} className="flex flex-row bg-[#4b9838] hover:bg-[#4b9838]/80 duration-300 text-[#f8f8f9] text-sm font-medium space-x-3 py-2 px-4 rounded-lg">
-                <Download className="w-4 h-4 my-auto" />
-                <span>Download CV</span>
-              </Button>
+              <Link to={`/cv.pdf`} target="_blank" rel="noopener noreferrer">
+                <Button variant={"outline"} className="flex flex-row bg-[#4b9838] hover:bg-[#4b9838]/80 duration-300 text-[#f8f8f9] text-sm font-medium space-x-3 py-2 px-4 rounded-lg">
+                  <Download className="w-4 h-4 my-auto" />
+                  <span>Download CV</span>
+                </Button>
+              </Link>
 
               {/* Visit Github */}
               <Link to={`https://github.com/${import.meta.env.VITE_GITHUB_PROFILE}`} target="_blank" rel="noopener noreferrer">
